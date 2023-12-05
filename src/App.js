@@ -30,10 +30,10 @@ const App = () => {
 
   return (
     <div className='app'>
-      <PlayerInfo player={players[0]} isCurrent={currentPlayerIndex === 0} />
-      <Board onCardClick={handleCardClick} />
-      <PlayerInfo player={players[1]} isCurrent={currentPlayerIndex === 1} />
-      <button onClick={startNewGame}>Start New Game</button>
+      {/* <PlayerInfo player={players[0]} isCurrent={currentPlayerIndex === 0} /> */}
+      <Board />
+      {/* <PlayerInfo player={players[1]} isCurrent={currentPlayerIndex === 1} /> */}
+      {/* <button onClick={startNewGame}>Start New Game</button> */}
     </div>
   );
 };
