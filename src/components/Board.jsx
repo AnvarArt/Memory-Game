@@ -1,35 +1,87 @@
-import React, { useState, useEffect } from "react";
-import Card from "./Card";
-import { Grid } from "@mui/material";
-//import "./Board.css";
-
-// const initBoard = [
-//   [1, 2, 3],
-//   [4, 5, 6],
-//   [7, 8, 9],
-// ];
-
-const initBoard = new Array(6).fill(new Array(6).fill(2));
-
-const onCellHandleClick = (e) => {
-  console.log(e.target.innerText);
-};
+import { useState } from "react";
+import { Container } from "@mui/material";
+import Cell from "./Cell";
+import { cards } from "../config/card-config.js";
+import { shuffleBoard } from "../utils/board.helper.js";
 
 const Board = () => {
+  const [flippedCards, setFlippedCards] = useState([]);
+  // const [matches, setMatches] = useState([]);
+  const [shuffledCards, setShuffledCards] = useState(shuffleBoard(cards));
+
+  // const shuffledCards = shuffleBoard(cards);
+  // const shuffledCards = cards;
+
+  console.log({ shuffledCards });
+  console.log({ flippedCards });
+
+  const handleCardClick = (card) => {
+    // Prevent flipping more than two cards at once
+    if (flippedCards.length === 2) {
+      return;
+    }
+
+    // Flip the clicked card
+    const newCards = shuffledCards.map((c) => (c.id === card.id ? { ...c, isFlipped: true } : c));
+    setShuffledCards(newCards);
+
+    const newFlippedCards = [...flippedCards, card];
+    setFlippedCards(newFlippedCards);
+
+    // Check for match if two cards are flipped
+    if (newFlippedCards.length === 2) {
+      const match = newFlippedCards[0].name === newFlippedCards[1].name;
+      if (match) {
+        console.log("Match!");
+        // Remove matched cards
+        //added setTimeout to allow user to see matched cards before they are removed (marked green - found match)
+        setTimeout(() => {
+          const matchedCards = newCards.map((card) => {
+            const isCardFlipped = newFlippedCards.some((flippedCard) => flippedCard.id === card.id);
+            if (isCardFlipped) {
+              console.log("Match found!");
+              return { ...card, match: true };
+            } else {
+              return card;
+            }
+          });
+          setShuffledCards(matchedCards);
+        }, 1000);
+      }
+
+      // Reset flipped cards after a short delay
+      setTimeout(() => {
+        setFlippedCards([]);
+        // Flip cards back if not matched
+        if (!match) {
+          const resetCards = shuffledCards.map((c) => ({ ...c, isFlipped: false }));
+          setShuffledCards(resetCards);
+        }
+      }, 1000);
+    }
+  };
+
   return (
-    <Grid style={{ width: "20rem", height: "20rem" }} spacing={2} container columns={{ xs: 4, sm: 8, md: 12 }}>
-      {initBoard.map((row, rowIdx) => (
-        <Grid container item key={rowIdx} spacing={2}>
-          {row.map((cell, cellIdx) => (
-            <Grid item key={cellIdx + "cell"} xs={2}>
-              <div style={{ border: "1px solid black", height: "100%" }} onClick={onCellHandleClick}>
-                {cell}
-              </div>
-            </Grid>
-          ))}
-        </Grid>
-      ))}
-    </Grid>
+    <Container style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(6, 1fr)`,
+          gridTemplateRows: `repeat(6, 1fr)`,
+          gridGap: "10px",
+          // width: `100px",
+          // height: "150px",
+          // width: `${GRID_SIZE * TILE_SIZE}px`,
+          // height: `${GRID_SIZE * TILE_SIZE}px`,
+        }}
+      >
+        {shuffledCards.map((card) => (
+          <div key={card.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid black" }}>
+            <Cell card={card} onCellClick={handleCardClick} />
+          </div>
+        ))}
+      </div>
+    </Container>
   );
 };
 
