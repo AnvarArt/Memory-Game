@@ -4,7 +4,7 @@ import Cell from "./Cell";
 import { cards } from "../config/card-config.js";
 import { shuffleBoard } from "../utils/board.helper.js";
 
-const Board = ({ setGameOver }) => {
+const Board = ({ setGameOver, turns, setTurns, onProgress }) => {
   const [flippedCards, setFlippedCards] = useState([]);
   // const [matches, setMatches] = useState([]);
   const [shuffledCards, setShuffledCards] = useState(shuffleBoard(cards));
@@ -34,15 +34,17 @@ const Board = ({ setGameOver }) => {
     // Check for match if two cards are flipped
     if (newFlippedCards.length === 2) {
       const match = newFlippedCards[0].name === newFlippedCards[1].name;
+      onProgress(match);
       if (match) {
-        console.log("Match!");
+        //console.log("Match!");
+
         // Remove matched cards
         //added setTimeout to allow user to see matched cards before they are removed (marked green - found match)
         setTimeout(() => {
           const matchedCards = newCards.map((card) => {
             const isCardFlipped = newFlippedCards.some((flippedCard) => flippedCard.id === card.id);
             if (isCardFlipped) {
-              console.log("Match found!");
+              //console.log("Match found!");
               return { ...card, match: true };
             } else {
               return card;
@@ -79,8 +81,8 @@ const Board = ({ setGameOver }) => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: `repeat(6, 1fr)`,
-          gridTemplateRows: `repeat(6, 1fr)`,
+          gridTemplateColumns: `repeat(4, 1fr)`,
+          gridTemplateRows: `repeat(4, 1fr)`,
           gridGap: "10px",
           // width: `100px",
           // height: "150px",
