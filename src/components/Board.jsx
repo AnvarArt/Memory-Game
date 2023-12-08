@@ -4,7 +4,7 @@ import Cell from "./Cell";
 import { cards } from "../config/card-config.js";
 import { shuffleBoard } from "../utils/board.helper.js";
 
-const Board = () => {
+const Board = ({ setGameOver }) => {
   const [flippedCards, setFlippedCards] = useState([]);
   // const [matches, setMatches] = useState([]);
   const [shuffledCards, setShuffledCards] = useState(shuffleBoard(cards));
@@ -18,6 +18,9 @@ const Board = () => {
   const handleCardClick = (card) => {
     // Prevent flipping more than two cards at once
     if (flippedCards.length === 2) {
+      return;
+    }
+    if (flippedCards.some((item) => item.id === card.id)) {
       return;
     }
 
@@ -46,6 +49,16 @@ const Board = () => {
             }
           });
           setShuffledCards(matchedCards);
+
+          const allFlipped = matchedCards.every((item) => item.match);
+
+          console.log({ allFlipped });
+          console.log({ matchedCards });
+
+          if (allFlipped) {
+            setGameOver(true);
+            console.log("gameOver");
+          }
         }, 1000);
       }
 
