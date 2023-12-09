@@ -1,19 +1,9 @@
 import { useState } from "react";
 import { Container } from "@mui/material";
 import Cell from "./Cell";
-import { cards } from "../config/card-config.js";
-import { shuffleBoard } from "../utils/board.helper.js";
 
-const Board = ({ setGameOver, turns, setTurns, onProgress }) => {
+const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNubmerOfTurns, shuffledCards, setShuffledCards }) => {
   const [flippedCards, setFlippedCards] = useState([]);
-  // const [matches, setMatches] = useState([]);
-  const [shuffledCards, setShuffledCards] = useState(shuffleBoard(cards));
-
-  // const shuffledCards = shuffleBoard(cards);
-  // const shuffledCards = cards;
-
-  console.log({ shuffledCards });
-  console.log({ flippedCards });
 
   const handleCardClick = (card) => {
     // Prevent flipping more than two cards at once
