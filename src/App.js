@@ -42,7 +42,7 @@ const App = () => {
     setMatches({ playerOne: 0, playerTwo: 0 });
     setTurns(true);
     setGameOver(false);
-    setTurns(0);
+    setNubmerOfTurns(0);
   };
 
   const onProgress = (match) => {
@@ -88,9 +88,9 @@ const App = () => {
         Turns:{nubmerOfTurns}
       </Typography>
       <Stack direction='row' style={{ marginBottom: "2rem" }}>
-        <PlayerInfo player={playerOne} matches={matches.playerOne} score={score.playerOne} />
+        <PlayerInfo player={playerOne} matches={matches.playerOne} />
         <Board setGameOver={setGameOver} turns={turns} onProgress={onProgress} setTurns={setTurns} nubmerOfTurns={nubmerOfTurns} setNubmerOfTurns={setNubmerOfTurns} setShuffledCards={setShuffledCards} shuffledCards={shuffledCards} />
-        <PlayerInfo player={playerTwo} matches={matches.playerTwo} score={score.playerTwo} />
+        <PlayerInfo player={playerTwo} matches={matches.playerTwo} />
       </Stack>
       <Typography variant='h5' sx={{ textAlign: "center" }}>{`Total Score: Player1: ${score.playerOne} Player2: ${score.playerTwo}`}</Typography>
       {gameOver && (

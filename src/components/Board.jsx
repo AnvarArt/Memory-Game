@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container } from "@mui/material";
 import Cell from "./Cell";
 
-const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNubmerOfTurns, shuffledCards, setShuffledCards }) => {
+const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNubmerOfTurns, shuffledCards, setShuffledCards, time, setTime }) => {
   const [flippedCards, setFlippedCards] = useState([]);
 
   const handleCardClick = (card) => {
