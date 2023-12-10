@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Container } from "@mui/material";
+import { Container, useMediaQuery } from "@mui/material";
 import Cell from "./Cell";
-import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNubmerOfTurns, shuffledCards, setShuffledCards, timerOn, setTimerOn }) => {
+const Board = ({ setGameOver, onProgress, shuffledCards, setShuffledCards, timerOn, setTimerOn }) => {
   const [flippedCards, setFlippedCards] = useState([]);
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -25,7 +24,7 @@ const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNub
     if (flippedCards.length === 2) {
       return;
     }
-    //If card is flipped it's not clickable
+    // If card is flipped it's not clickable
     if (card.match) return;
     if (flippedCards.some((item) => item.id === card.id)) {
       return;
@@ -44,12 +43,11 @@ const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNub
       onProgress(match);
       if (match) {
         // Remove matched cards
-        //added setTimeout to allow user to see matched cards before they are removed (marked green - found match)
+        // Added setTimeout to allow user to see matched cards before they are removed
         setTimeout(() => {
           const matchedCards = newCards.map((card) => {
             const isCardFlipped = newFlippedCards.some((flippedCard) => flippedCard.id === card.id);
             if (isCardFlipped) {
-              //console.log("Match found!");
               return { ...card, match: true };
             } else {
               return card;
@@ -58,7 +56,7 @@ const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNub
           setShuffledCards(matchedCards);
 
           const allFlipped = matchedCards.every((item) => item.match);
-
+          // If all cards are flipped, stop the timer and the game
           if (allFlipped) {
             setGameOver(true);
             setTimerOn(false);

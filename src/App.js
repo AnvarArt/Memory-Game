@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Grid, Container, Stack, Typography, Button } from "@mui/material";
+import { Container, Stack, Typography, Button } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Board from "./components/Board";
@@ -9,9 +9,8 @@ import { shuffleBoard } from "./utils/board.helper.js";
 import { formatTime } from "./utils/helper.js";
 
 const App = () => {
-  //For responsive design, so the game can played on mobile devices
+  // For responsive design, so the game can played on mobile devices
   const theme = useTheme();
-  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [gameOver, setGameOver] = useState(false);
@@ -19,19 +18,19 @@ const App = () => {
   const [playerTwo, setPlayerTwo] = useState("Player 2");
   const [winner, setWinner] = useState("");
   const [shuffledCards, setShuffledCards] = useState(shuffleBoard(cards));
-  //will be saved in localqstorage
+  // Will be saved in localqstorage
   const isMounted = useRef(false);
 
-  //Tracking the progress of the game
+  // Tracking the progress of the game
   const [score, setScore] = useState({ playerOne: 0, playerTwo: 0 });
   const [matches, setMatches] = useState({ playerOne: 0, playerTwo: 0 });
   // turns === true - Player 1 turn; turns === false - Player 1 turn
   const [turns, setTurns] = useState(true);
-  //Timer
+  // Timer
   const [timer, setTimer] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
 
-  //Number of turns
+  // Number of turns
   const [nubmerOfTurns, setNubmerOfTurns] = useState(0);
 
   useEffect(() => {
@@ -46,7 +45,7 @@ const App = () => {
     }
   }, [timerOn]);
 
-  //Updating Scores for both players and determining the Winner
+  // Updating Scores for both players and determining the Winner
   useEffect(() => {
     if (gameOver) {
       if (matches.playerOne > matches.playerTwo) {
@@ -59,7 +58,7 @@ const App = () => {
     }
   }, [gameOver]);
 
-  //Restart button
+  // Restart button
   const clickRestart = () => {
     setShuffledCards(shuffleBoard(cards));
     setMatches({ playerOne: 0, playerTwo: 0 });
@@ -78,13 +77,13 @@ const App = () => {
         setMatches({ ...matches, playerTwo: matches.playerTwo + 1 });
       }
     }
-    //Changing Player's turns
+    // Changing Player's turns
     if (turns) {
       setTurns(false);
     } else setTurns(true);
   };
 
-  //Get from Local Storage
+  // Get from Local Storage
   useEffect(() => {
     const storedScore = localStorage.getItem("matchGame");
     if (storedScore) {
@@ -94,7 +93,7 @@ const App = () => {
 
   // Set to Local Storage
   useEffect(() => {
-    //we need to skip setting to local storage on a first run
+    // We need to skip setting to local storage on a first run
     if (!isMounted.current) {
       isMounted.current = true;
       return;
