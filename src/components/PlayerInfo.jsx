@@ -1,17 +1,12 @@
 import React from "react";
-import { useState } from "react";
-//import "./PlayerInfo.css";
+import { Typography } from "@mui/material";
 
-const PlayerInfo = ({ player, matches }) => {
+const PlayerInfo = ({ player, matches, turns }) => {
   return (
-    <div>
-      {/* <h2>
-        {player}: {`Score: ${score}`}
-      </h2> */}
-      <h2>
+    <div style={{ color: turns ? "green" : "" }}>
+      <Typography variant='h4'>
         {player}: {`Matches: ${matches}`}
-      </h2>
-      <p></p>
+      </Typography>
     </div>
   );
 };

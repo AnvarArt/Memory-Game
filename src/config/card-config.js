@@ -24,12 +24,12 @@ const initCards = [
   { id: 2, name: "airbus", image: airbus, isFlipped: false, match: false },
   { id: 3, name: "audi", image: audi, isFlipped: false, match: false },
   { id: 4, name: "bmw", image: bmw, isFlipped: false, match: false },
-  //   { id: 5, name: "bus", image: bus, isFlipped: false, match: false },
-  //   { id: 6, name: "chevrolet", image: chevrolet, isFlipped: false, match: false },
-  //   { id: 7, name: "cruise_ship", image: cruise_ship, isFlipped: false, match: false },
-  //   { id: 8, name: "ferrari", image: ferrari, isFlipped: false, match: false },
-  //   { id: 9, name: "harley", image: harley, isFlipped: false, match: false },
-  //   { id: 10, name: "mercedes", image: mercedes, isFlipped: false, match: false },
+  { id: 5, name: "bus", image: bus, isFlipped: false, match: false },
+  { id: 6, name: "chevrolet", image: chevrolet, isFlipped: false, match: false },
+  { id: 7, name: "cruise_ship", image: cruise_ship, isFlipped: false, match: false },
+  { id: 8, name: "ferrari", image: ferrari, isFlipped: false, match: false },
+  { id: 9, name: "harley", image: harley, isFlipped: false, match: false },
+  { id: 10, name: "mercedes", image: mercedes, isFlipped: false, match: false },
   //   { id: 11, name: "motorcycle", image: motorcycle, isFlipped: false, match: false },
   //   { id: 12, name: "one_ford", image: one_ford, isFlipped: false, match: false },
   //   { id: 13, name: "one_taxi", image: one_taxi, isFlipped: false, match: false },
@@ -41,11 +41,6 @@ const initCards = [
   // { id: 19, name: "tractor", image: tractor, isFlipped: false },
   // { id: 20, name: "yacht", image: yacht, isFlipped: false },
 ];
-
-// export const cards = initCards.reduce((acc, card) => {
-//   acc.push(card, { ...card, id: card.id + initCards.length });
-//   return acc;
-// }, []);
 
 const doubledCards = [];
 

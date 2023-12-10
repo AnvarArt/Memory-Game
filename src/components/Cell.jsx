@@ -1,18 +1,18 @@
-const Cell = ({ card, onCellClick }) => {
+import { memo } from "react";
+import { Card } from "@mui/material";
+
+const Cell = ({ card, onCellClick, tileSize }) => {
   return (
     <div onClick={() => onCellClick(card)}>
-      {card.match ? (
-        <div style={{ width: "100px", height: "100px" }}>
-          <img src={card.image} alt={card.name} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
-        </div>
-      ) : //, backgroundColor: "green" }} />
-      card.isFlipped ? (
-        <img src={card.image} alt={card.name} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
+      {card.match || card.isFlipped ? (
+        <Card variant='outlined' style={{ width: tileSize, height: tileSize }}>
+          <img src={card.image} alt={card.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+        </Card>
       ) : (
-        <div style={{ width: "100px", height: "100px", backgroundColor: "blue" }} />
+        <Card variant='outlined' style={{ width: tileSize, height: tileSize, backgroundColor: "blue" }}></Card>
       )}
     </div>
   );
 };
 
-export default Cell;
+export default memo(Cell);

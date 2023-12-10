@@ -1,15 +1,32 @@
 import { useState } from "react";
 import { Container } from "@mui/material";
 import Cell from "./Cell";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
-const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNubmerOfTurns, shuffledCards, setShuffledCards, time, setTime }) => {
+const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNubmerOfTurns, shuffledCards, setShuffledCards, timerOn, setTimerOn }) => {
   const [flippedCards, setFlippedCards] = useState([]);
+  const theme = useTheme();
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const TILE_SIZE = isMediumScreen ? 50 : 100;
+  const GRID_SIZE_X = 5;
+  const GRID_SIZE_Y = 4;
+  const GRID_GAP = isMediumScreen ? 5 : 10;
+  const totalWidth = GRID_SIZE_X * TILE_SIZE + (GRID_SIZE_X - 1) * GRID_GAP;
+  const totalHeight = GRID_SIZE_Y * TILE_SIZE + (GRID_SIZE_Y - 1) * GRID_GAP;
 
   const handleCardClick = (card) => {
+    //Start timer on a first card click
+    if (!timerOn) {
+      setTimerOn(true);
+    }
     // Prevent flipping more than two cards at once
     if (flippedCards.length === 2) {
       return;
     }
+    //If card is flipped it's not clickable
+    if (card.match) return;
     if (flippedCards.some((item) => item.id === card.id)) {
       return;
     }
@@ -26,8 +43,6 @@ const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNub
       const match = newFlippedCards[0].name === newFlippedCards[1].name;
       onProgress(match);
       if (match) {
-        //console.log("Match!");
-
         // Remove matched cards
         //added setTimeout to allow user to see matched cards before they are removed (marked green - found match)
         setTimeout(() => {
@@ -44,12 +59,9 @@ const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNub
 
           const allFlipped = matchedCards.every((item) => item.match);
 
-          console.log({ allFlipped });
-          console.log({ matchedCards });
-
           if (allFlipped) {
             setGameOver(true);
-            console.log("gameOver");
+            setTimerOn(false);
           }
         }, 1000);
       }
@@ -71,18 +83,16 @@ const Board = ({ setGameOver, turns, setTurns, onProgress, nubmerOfTurns, setNub
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: `repeat(4, 1fr)`,
-          gridTemplateRows: `repeat(4, 1fr)`,
-          gridGap: "10px",
-          // width: `100px",
-          // height: "150px",
-          // width: `${GRID_SIZE * TILE_SIZE}px`,
-          // height: `${GRID_SIZE * TILE_SIZE}px`,
+          gridTemplateColumns: `repeat(${GRID_SIZE_X}, ${TILE_SIZE}px)`,
+          gridTemplateRows: `repeat(${GRID_SIZE_Y}, ${TILE_SIZE}px)`,
+          gridGap: `${GRID_GAP}px`,
+          width: `${totalWidth}px`,
+          height: `${totalHeight}px`,
         }}
       >
         {shuffledCards.map((card) => (
-          <div key={card.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid black" }}>
-            <Cell card={card} onCellClick={handleCardClick} />
+          <div>
+            <Cell card={card} onCellClick={handleCardClick} tileSize={TILE_SIZE} />
           </div>
         ))}
       </div>
