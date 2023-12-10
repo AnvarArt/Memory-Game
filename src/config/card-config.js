@@ -42,11 +42,6 @@ const initCards = [
   // { id: 20, name: "yacht", image: yacht, isFlipped: false },
 ];
 
-// export const cards = initCards.reduce((acc, card) => {
-//   acc.push(card, { ...card, id: card.id + initCards.length });
-//   return acc;
-// }, []);
-
 const doubledCards = [];
 
 // Loop through each card in the initCards array

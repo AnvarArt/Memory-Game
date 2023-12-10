@@ -3,8 +3,8 @@ import { Typography } from "@mui/material";
 
 const PlayerInfo = ({ player, matches, turns }) => {
   return (
-    <div style={{ color: turns ? "green" : "" }}>
-      <Typography variant='h4'>
+    <div>
+      <Typography variant='h4' style={{ color: turns ? "green" : "" }}>
         {player}: {`Matches: ${matches}`}
       </Typography>
     </div>
