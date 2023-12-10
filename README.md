@@ -1,3 +1,5 @@
+# Link for the game
+Memory game has been hosted on https://vercel.com/, to enjoy the game please follow this [link](https://memory-game-pi-seven.vercel.app/) 🙂
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
