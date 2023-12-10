@@ -42,8 +42,8 @@ const Board = ({ setGameOver, onProgress, shuffledCards, setShuffledCards, timer
       const match = newFlippedCards[0].name === newFlippedCards[1].name;
       onProgress(match);
       if (match) {
-        // Remove matched cards
-        // Added setTimeout to allow user to see matched cards before they are removed
+        // Matched cards
+        // Added setTimeout to allow user to see matched cards
         setTimeout(() => {
           const matchedCards = newCards.map((card) => {
             const isCardFlipped = newFlippedCards.some((flippedCard) => flippedCard.id === card.id);
